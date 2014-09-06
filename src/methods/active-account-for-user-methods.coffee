@@ -17,16 +17,32 @@ module.exports = class ActiveAccountForUser
   ###
   constructor:(@models) ->
 
+
   ###
-  Creates or replaces the active account/app
-  @Note: This could be an upsert
+  Retrieves the active account for a user, if available. Can return null, which 
+  means none has been set.
   ###
-  createOrPut: (userId,data = {},options,cb) =>
+  get: (userId,options,cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorUserIdRequired) unless userId
 
     userId = mongooseRestHelper.asObjectId userId
 
-    @models.ActiveAccountForUserUser.findOne _id : userId, (err,item) =>
+    @models.ActiveAccountForUser.findOne _id : userId, (err,item) =>
+      return cb err if err
+      cb null, item
+
+  ###
+  Creates or replaces the active account/app
+  @Note: This could be an upsert
+  ###
+  createOrPut: (userId,data = {},options,cb = ->) =>
+    cb = options if _.isFunction options
+    return cb Boom.badRequest( i18n.errorUserIdRequired) unless userId
+
+    userId = mongooseRestHelper.asObjectId userId
+
+    @models.ActiveAccountForUser.findOne _id : userId, (err,item) =>
       return cb err if err
       item = new @models.ActiveAccountForUser _id : userId unless item
 

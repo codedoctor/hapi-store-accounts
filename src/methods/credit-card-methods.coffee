@@ -18,6 +18,7 @@ module.exports = class CreditCardMethods
   constructor:(@models) ->
 
   all: (options = {},cb = ->) =>
+    cb = options if _.isFunction options
     settings = 
         baseQuery: {}
         defaultSort: 'name'
@@ -27,6 +28,7 @@ module.exports = class CreditCardMethods
 
 
   allForAccountId: (accountId,options = {},cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorAccountIdRequired) unless accountId
 
     settings = 
@@ -42,11 +44,13 @@ module.exports = class CreditCardMethods
   Retrieve a single creditCard through it's id
   ###
   get: (creditCardId, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorCreditCardIdRequired) unless creditCardId
     mongooseRestHelper.getById @models.CreditCard,creditCardId,null,options, cb
 
 
   destroy: (creditCardId, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorCreditCardIdRequired) unless creditCardId
     settings = {}
     mongooseRestHelper.destroy @models.CreditCard,creditCardId, settings,{}, cb
@@ -55,6 +59,7 @@ module.exports = class CreditCardMethods
   Create a new creditCard
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorAccountIdRequired) unless accountId
 
     settings = {}
@@ -65,10 +70,9 @@ module.exports = class CreditCardMethods
   Updates a credit card
   ###
   patch: (creditCardId, obj = {}, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorCreditCardIdRequired) unless creditCardId
     settings =
       exclude : UPDATE_EXCLUDEFIELDS
     mongooseRestHelper.patch @models.CreditCard,creditCardId, settings, obj, options, cb
-
-
 

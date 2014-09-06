@@ -24,6 +24,7 @@ module.exports = class AccountMethods
   constructor:(@models) ->
 
   all: (options = {},cb = ->) =>
+    cb = options if _.isFunction options
     settings = 
         baseQuery: {}
         defaultSort: 'name'
@@ -35,10 +36,12 @@ module.exports = class AccountMethods
   Retrieve a single account through it's id
   ###
   get: (accountId, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorAccountIdRequired) unless accountId
     mongooseRestHelper.getById @models.Account,accountId,null,options, cb
 
   getForOwner: (userId,options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorUserIdRequired) unless userId
     settings = 
       baseQuery: 
@@ -46,6 +49,7 @@ module.exports = class AccountMethods
     mongooseRestHelper.getOne @models.Account,settings,options, cb
 
   getAllForOwner: (userId,options = {},cb = ->) =>
+    cb = options if _.isFunction options
     settings = 
         baseQuery:
           owningUserId: mongooseRestHelper.asObjectId userId
@@ -56,6 +60,7 @@ module.exports = class AccountMethods
 
 
   destroy: (accountId, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorAccountIdRequired) unless accountId
     settings = {}
     mongooseRestHelper.destroy @models.Account,accountId, settings,{}, cb
@@ -64,6 +69,7 @@ module.exports = class AccountMethods
   Create a new account
   ###
   create:(objs = {}, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     settings = {}
     mongooseRestHelper.create @models.Account,settings,objs,options,cb
 
@@ -71,6 +77,7 @@ module.exports = class AccountMethods
   Updates a deployment
   ###
   patch: (accountId, obj = {}, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorAccountIdRequired) unless accountId
     settings =
       exclude : UPDATE_EXCLUDEFIELDS
@@ -80,6 +87,7 @@ module.exports = class AccountMethods
   Creates a new item, or just perform a put if it exists
   ###
   createOrPut :(objs = {}, options = {}, cb = ->) =>
+    cb = options if _.isFunction options
     return cb Boom.badRequest( i18n.errorObjs_idRequired) unless objs._id
 
     @get objs._id, {}, (err, item) =>

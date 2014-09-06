@@ -18,7 +18,6 @@ module.exports = CreditCardSchema = new mongoose.Schema
       ###
       stripeCustomerId:
         type: String
-        required: false
 
       stripeCardId:
         type: String
@@ -32,28 +31,20 @@ module.exports = CreditCardSchema = new mongoose.Schema
         type: Number
       country:
         type: String
-        required: false
       name:
         type: String
-        required: false
       addressLine1:
         type: String
-        required: false
       addressLine2:
         type: String
-        required: false
       addressCity:
         type: String
-        required: false
       addressState:
         type: String
-        required: false
       addressZip:
         type: String
-        required: false
       addressCountry:
         type: String
-        required: false
     , 
       strict: true
       collection: 'accountmgmt.creditcards'

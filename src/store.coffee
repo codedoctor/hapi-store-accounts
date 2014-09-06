@@ -42,12 +42,12 @@ module.exports = class Store
 
     @creditCards = new CreditCardMethods @models
     @accounts = new AccountMethods @models
-    @activeAccountForUser = new ActiveAccountForUserMethods @models
+    @activeAccountForUsers = new ActiveAccountForUserMethods @models
 
     @methodNames = [
         'creditCards'
         'accounts'
-        'activeAccountForUser'
+        'activeAccountForUsers'
       ]
 
 
