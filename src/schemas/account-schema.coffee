@@ -1,7 +1,6 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
 pluginTimestamp = require "mongoose-plugins-timestamp"
-ObjectId = mongoose.Schema.ObjectId
 
 module.exports = AccountSchema = new mongoose.Schema
       owningUserId:

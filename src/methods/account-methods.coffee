@@ -46,16 +46,17 @@ module.exports = class AccountMethods
     settings = 
       baseQuery: 
         owningUserId: mongooseRestHelper.asObjectId userId
+      defaultSort: 'name'
     mongooseRestHelper.getOne @models.Account,settings,options, cb
 
   getAllForOwner: (userId,options = {},cb = ->) =>
     cb = options if _.isFunction options
     settings = 
-        baseQuery:
-          owningUserId: mongooseRestHelper.asObjectId userId
-        defaultSort: 'name'
-        defaultSelect: null
-        defaultCount: 50
+      baseQuery:
+        owningUserId: mongooseRestHelper.asObjectId userId
+      defaultSort: 'name'
+      defaultSelect: null
+      defaultCount: 50
     mongooseRestHelper.all @models.Account,settings,options, cb
 
 
