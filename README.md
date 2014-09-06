@@ -9,7 +9,12 @@
 
 (C) 2014 Martin Wawrusch
 
-Plugin exposes models/methods for identity management. Will be documented upon request (or I have time...).
+# Provides a backend data store to manage accounts associated with users.
+
+The purpose of this module is to provide account management functionality similar to
+those found in SAAS sites like new relic. Core assumptions is that a user can have access
+to multiple accounts, and that Stripe is used for billing (note: We might factor out the whole stripe billing part into it's own billing module).
+
 
 ## See also
 
