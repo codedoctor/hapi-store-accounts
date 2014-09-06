@@ -1,6 +1,12 @@
-index = require '../../lib/index'
-Hapi = require "hapi"
 _ = require 'underscore'
+Hapi = require "hapi"
+mongoose = require 'mongoose'
+
+databaseCleaner = require './database-cleaner'
+index = require '../../lib/index'
+
+loggingEnabled = false
+testUrl = 'mongodb://localhost/codedoctor-test'
 
 module.exports = loadServer = (cb) ->
     server = new Hapi.Server 5675,"localhost",{}
@@ -10,4 +16,14 @@ module.exports = loadServer = (cb) ->
     ]
 
     server.pack.register pluginConf, (err) ->
-      cb err,server
+      return cb err if err
+
+      mongoose.disconnect()
+      mongoose.connect testUrl, (err) ->
+        return cb err if err
+        databaseCleaner loggingEnabled, (err) ->
+          return cb err if err
+          plugin = server.pack.plugins['hapi-store-accounts']
+          plugin.rebuildIndexes (err) ->
+            cb err,server,plugin
+
