@@ -58,6 +58,15 @@ describe 'WHEN index has been loaded', ->
 
         cb err
 
+    it 'it should get count accounts for owner', (cb) ->
+      plugin.accounts.countAllForOwner fixtures.userId, null, (err,totalCount) ->
+        should.not.exist err
+        should.exist totalCount
+        totalCount.should.equal 2
+
+        cb err
+
+
     it 'it should get first one by name for owner', (cb) ->
       plugin.accounts.getForOwner fixtures.userId, null, (err,account) ->
         console.log JSON.stringify(account)

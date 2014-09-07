@@ -32,6 +32,7 @@ module.exports = class AccountMethods
         defaultCount: 50
     mongooseRestHelper.all @models.Account,settings,options, cb
 
+
   ###
   Retrieve a single account through it's id
   ###
@@ -51,6 +52,8 @@ module.exports = class AccountMethods
 
   getAllForOwner: (userId,options = {},cb = ->) =>
     cb = options if _.isFunction options
+    return cb Boom.badRequest( i18n.errorUserIdRequired) unless userId
+
     settings = 
       baseQuery:
         owningUserId: mongooseRestHelper.asObjectId userId
@@ -59,6 +62,18 @@ module.exports = class AccountMethods
       defaultCount: 50
     mongooseRestHelper.all @models.Account,settings,options, cb
 
+
+  countAllForOwner: (userId,options = {},cb = ->) =>
+    cb = options if _.isFunction options
+    return cb Boom.badRequest( i18n.errorUserIdRequired) unless userId
+
+    options.where ||= {}
+    options.where['owningUserId'] = mongooseRestHelper.asObjectId userId
+
+    @models.Account.count options.where,(err, totalCount) ->
+      return cb err if err
+      cb null,totalCount
+      
 
   destroy: (accountId, options = {}, cb = ->) =>
     cb = options if _.isFunction options
