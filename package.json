@@ -1,6 +1,6 @@
 {
   "name": "hapi-store-accounts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "main": "lib/index.js",
   "repository": {
@@ -12,7 +12,7 @@
   },
   "description": "Provides a backend data store to manage accounts associated with users.",
   "dependencies": {
-    "async" : "0.9.0",
+    "async": "0.9.0",
     "boom": "2.5.1",
     "hoek": "2.4.1",
     "mongoose-plugins-accessible-by": "0.2.x",
@@ -21,7 +21,7 @@
     "mongoose-plugins-tags-simple": "0.2.x",
     "mongoose-plugins-timestamp": "0.2.x",
     "mongoose-rest-helper": "1.0.x",
-    "underscore-ext" : "0.2.0",
+    "underscore-ext": "0.2.0",
     "underscore": ">=1.7.0"
   },
   "peerDependencies": {
