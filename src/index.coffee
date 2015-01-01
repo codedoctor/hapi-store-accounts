@@ -5,7 +5,7 @@ Store = require './store'
 
 internals = {}
 
-module.exports.register = (plugin, options = {}, cb) ->
+module.exports.register = (server, options = {}, cb) ->
   defaults =
     autoIndex: false
 
@@ -19,11 +19,11 @@ module.exports.register = (plugin, options = {}, cb) ->
   models = {}
   models[n] = v for n,v of dataStore.models
 
-  plugin.expose 'dataStore', dataStore
-  plugin.expose 'methods', methods
-  plugin.expose 'models', models
+  server.expose 'dataStore', dataStore
+  server.expose 'methods', methods
+  server.expose 'models', models
 
-  plugin.expose methodName, dataStore[methodName] for methodName in dataStore.methodNames
+  server.expose methodName, dataStore[methodName] for methodName in dataStore.methodNames
 
   fnRemoveIndexForModel = (model,cb) ->
     model.collection.dropAllIndexes (err) ->
@@ -45,7 +45,7 @@ module.exports.register = (plugin, options = {}, cb) ->
 
         cb null
 
-  plugin.expose 'rebuildIndexes', fnRebuildIndexes
+  server.expose 'rebuildIndexes', fnRebuildIndexes
 
   cb()
 

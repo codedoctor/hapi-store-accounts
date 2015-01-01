@@ -9,13 +9,16 @@ loggingEnabled = false
 testUrl = 'mongodb://localhost/codedoctor-test'
 
 module.exports = loadServer = (cb) ->
-    server = new Hapi.Server 5675,"localhost",{}
+    server = new Hapi.Server()
+    server.connection
+              port: 5675
+              host: "localhost"
 
     pluginConf = [
-        plugin: index
+        register: index
     ]
 
-    server.pack.register pluginConf, (err) ->
+    server.register pluginConf, (err) ->
       return cb err if err
 
       mongoose.disconnect()
@@ -23,7 +26,7 @@ module.exports = loadServer = (cb) ->
         return cb err if err
         databaseCleaner loggingEnabled, (err) ->
           return cb err if err
-          plugin = server.pack.plugins['hapi-store-accounts']
+          plugin = server.plugins['hapi-store-accounts']
           plugin.rebuildIndexes (err) ->
             cb err,server,plugin
 
