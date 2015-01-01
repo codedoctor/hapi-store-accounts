@@ -70,7 +70,7 @@ module.exports = class AccountMethods
     options.where ||= {}
     options.where['owningUserId'] = mongooseRestHelper.asObjectId userId
 
-    @models.Account.count options.where,(err, totalCount) ->
+    @models.Account.count options.where,(err, totalCount) =>
       return cb err if err
       cb null,totalCount
       
